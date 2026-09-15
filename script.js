@@ -207,6 +207,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Confetti explosion effect (simple canvas)
     triggerConfetti();
+
+    // Anime.js entrance animation for hero elements
+    if (typeof anime !== 'undefined') {
+      anime({
+        targets: ['header .badge', 'header .names', 'header .section-divider', 'header .date'],
+        opacity: [0, 1],
+        translateY: [25, 0],
+        delay: anime.stagger(120, { start: 250 }),
+        duration: 850,
+        easing: 'easeOutCubic'
+      });
+    }
   }
   
   btnOpen.addEventListener('click', openEnvelope);
@@ -305,14 +317,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // 6. Wishes Guestbook Logic
-  const defaultWishes = [
-    { name: isRtl ? 'فاطمة' : 'Fatma', text: isRtl ? 'الف مبروك يا حبايب قلبي ربنا يكملكم علي خير يارب' : 'Congratulations my beloveds, may God complete everything well for you', date: isRtl ? 'الآن' : 'Just now' }
-  ];
+  const defaultWishes = [];
   
   function getWishes() {
-    const local = localStorage.getItem('wedding_wishes_v2');
+    const local = localStorage.getItem('wedding_wishes_v3');
     if (local) {
-      return JSON.parse(local);
+      try {
+        return JSON.parse(local);
+      } catch (e) {
+        return [];
+      }
     }
     return defaultWishes;
   }
@@ -321,6 +335,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const list = getWishes();
     wishesFeed.innerHTML = '';
     
+    if (list.length === 0) {
+      wishesFeed.innerHTML = `
+        <div class="empty-wishes-placeholder" style="text-align: center; padding: 25px 15px; color: var(--text-muted); font-size: 0.85rem; font-family: var(--font-arabic);">
+          <span class="lang-ar">كن أول من يكتب تهنئة للعروسين في دفتر التهاني ❤️✨</span>
+          <span class="lang-en">Be the first to leave your congratulations for the couple! ❤️✨</span>
+        </div>
+      `;
+      return;
+    }
+
     list.forEach(item => {
       const wishDiv = document.createElement('div');
       wishDiv.className = 'wish-item';
@@ -343,7 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
       date: isRtl ? 'الآن' : 'Just now'
     };
     list.unshift(newWishItem);
-    localStorage.setItem('wedding_wishes_v2', JSON.stringify(list));
+    localStorage.setItem('wedding_wishes_v3', JSON.stringify(list));
     renderWishes();
   }
   
@@ -540,5 +564,55 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 5000);
   }
 
+  // 10. Scroll Animations powered by Anime.js (https://animejs.com/)
+  function initScrollAnimations() {
+    if (typeof anime === 'undefined' || !('IntersectionObserver' in window)) {
+      return;
+    }
+
+    const revealSelectors = [
+      '.intro-section',
+      '.burgundy-card',
+      '.families-union-box',
+      '.gallery-section',
+      '.gallery-container',
+      '.gallery-share-box',
+      '.venue-location-section',
+      '.dresscode-section',
+      '.photobooth-section',
+      '.photobooth-card',
+      '.wishes-section'
+    ];
+
+    const elements = document.querySelectorAll(revealSelectors.join(', '));
+    
+    elements.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(32px)';
+      el.style.willChange = 'opacity, transform';
+    });
+
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          anime({
+            targets: entry.target,
+            opacity: [0, 1],
+            translateY: [32, 0],
+            duration: 850,
+            easing: 'easeOutCubic'
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.08,
+      rootMargin: '0px 0px -30px 0px'
+    });
+
+    elements.forEach(el => scrollObserver.observe(el));
+  }
+
+  initScrollAnimations();
   updateGallery();
 });

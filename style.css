@@ -584,6 +584,37 @@ header .date {
   margin-bottom: 25px;
 }
 
+/* Families Union in Ceremony Card */
+.families-union-box {
+  text-align: center;
+  margin: 10px auto 25px auto;
+  padding: 16px 20px;
+  background: rgba(236, 228, 216, 0.08);
+  border: 1px solid rgba(236, 228, 216, 0.22);
+  border-radius: 12px;
+  max-width: 380px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+.families-subtitle {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--gold-light);
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.families-title {
+  font-size: 1.3rem;
+  color: #ece4d8;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+}
+
 /* Parents Grid in Ceremony Info Card */
 .parents-card-grid {
   display: grid;
