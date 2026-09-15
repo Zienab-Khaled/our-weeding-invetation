@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mostafa & Zienab's Wedding Invitation. Join us in celebrating our special day on October 16, 2026.">
+  <title>Mostafa & Zienab's Wedding Invitation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Lora:ital,wght@0,400..700;1,400..700&family=Pattaya&family=Viaoda+Libre&family=Quicksand:wght@300;400;500;600;700&family=The+Nautigal:wght@400;700&display=swap">
+  <link rel="stylesheet" href="style.css?v=18">
+</head>
+<body>
+
+  <!-- Background Music Audio Element -->
+  <audio id="bg-audio" src="https://archive.org/download/oum_kalthoum_alf_leila_w_leila_vinyl_lp_studio/%D8%A7%D9%94%D9%84%D9%81%20%D9%84%D9%8A%D9%84%D8%A9%20%D9%88%D9%84%D9%8A%D9%84%D8%A9.mp3" loop></audio>
+
+  <!-- SVG Corner Peony Sway Filter Definition -->
+  <svg width="0" height="0" aria-hidden="true" style="position: absolute;">
+    <defs>
+      <filter id="whip-flex" x="-15%" y="-15%" width="130%" height="130%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.006 0.016" numOctaves="1" seed="154" result="turb">
+          <animate attributeName="baseFrequency" dur="12s" values="0.006 0.016; 0.008 0.018; 0.005 0.014; 0.006 0.016" repeatCount="indefinite" />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="turb" scale="4" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- ENVELOPE / CARD LANDING PAGE SPLASH SCREEN -->
+  <div id="envelope-overlay">
+    <!-- Falling Hearts/Petals Layer -->
+    <div class="particles-container"></div>
+
+    <div class="envelope-card">
+      <!-- Pulsing Wax Seal button to open -->
+      <div class="wax-seal" title="Click to Open">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      </div>
+
+      <!-- Names -->
+      <h1 class="envelope-names">
+        <span class="lang-en">Mostafa &amp; Zienab</span>
+        <span class="lang-ar">مصطفى &amp; زينب</span>
+      </h1>
+
+      <!-- Divider -->
+      <div class="envelope-divider">
+        <span class="line"></span>
+        <span class="symbol">❦</span>
+        <span class="line"></span>
+      </div>
+
+      <!-- Date -->
+      <p class="envelope-date">
+        <span class="lang-en">October 16, 2026</span>
+        <span class="lang-ar">١٦ أكتوبر ٢٠٢٦</span>
+      </p>
+
+      <!-- Invitation statement -->
+      <p class="envelope-invites">
+        <span class="lang-en">Cordially Invites You</span>
+        <span class="lang-ar">يتشرفون بدعوتكم لحضور حفل الزفاف السعيد</span>
+      </p>
+
+      <!-- Open Button -->
+      <button class="btn-open">
+        <span class="lang-en">OPEN</span>
+        <span class="lang-ar">افتح الدعوة</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- REVEALED INVITATION CONTENT PAGE -->
+  <div id="main-invitation">
+    
+    <!-- Centered Card Invitation Container -->
+    <div class="invitation-card">
+
+      <!-- Top flower decoration -->
+      <div class="card-flower-header">
+        <img src="images/flower2-decoration.webp" alt="Wedding peony decoration">
+      </div>
+      
+      <!-- Floating Language Switcher overlay -->
+      <div class="lang-switcher">
+        <button id="btn-lang-en" class="active">EN</button>
+        <button id="btn-lang-ar">AR</button>
+      </div>
+
+      <!-- Floating Audio Control button -->
+      <div id="music-control" class="music-control" title="Toggle Sound">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.113 12.26a8.25 8.25 0 010 3.478M18 10.177a11.948 11.948 0 000 7.646M12 5.25L6.375 9.75H2.25v4.5h4.125L12 18.75V5.25z" />
+        </svg>
+      </div>
+
+      <!-- Header Hero banner -->
+      <header>
+        <span class="badge">
+          <span class="lang-en">The Wedding of</span>
+          <span class="lang-ar">عقد قران</span>
+        </span>
+        
+        <h1 class="names">
+          <span class="lang-en">Mostafa &amp; Zienab</span>
+          <span class="lang-ar">مصطفى &amp; زينب</span>
+        </h1>
+        
+        <div class="section-divider">
+          <span class="line"></span>
+          <span class="symbol">❦</span>
+          <span class="line"></span>
+        </div>
+        
+        <p class="date">
+          <span class="lang-en">Friday, October 16, 2026</span>
+          <span class="lang-ar">الجمعة، ١٦ أكتوبر ٢٠٢٦</span>
+        </p>
+      </header>
+
+      <!-- Intro Love Wording Section -->
+      <section class="intro-section">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display: block; margin: 0 auto 20px auto; color: var(--burgundy); opacity: 0.35;">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        
+        <p class="quote">
+          <span class="lang-en">"With love in our hearts, we invite you to share in our joy as we begin our lifetime journey together. Having you by our side on this special day would mean the world to us."</span>
+          <span class="lang-ar">"بكل الحب في قلوبنا، ندعوكم لتشاركونا فرحتنا ونحن نبدأ رحلة حياتنا معاً. حضوركم بجانبنا في هذا اليوم المميز يكمل سعادتنا ويعني لنا الكثير."</span>
+        </p>
+      </section>
+
+      <!-- Ceremony Info Burgundy Card Section -->
+      <section class="burgundy-card relative-overflow-visible">
+        <!-- Overlapping flower decoration on the right -->
+        <img src="images/flower2-decoration.webp" alt="" class="card-flower-decor-right">
+
+        <div class="burgundy-card-content">
+          <span class="badge" style="color: var(--gold-light);">
+            <span class="lang-en">Ceremony Info</span>
+            <span class="lang-ar">تفاصيل الحفل</span>
+          </span>
+          <h2 class="card-title">
+            <span class="lang-en">CEREMONY INFO</span>
+            <span class="lang-ar">عقد القران</span>
+          </h2>
+          
+          <!-- Parents side-by-side grid -->
+          <div class="parents-card-grid">
+            <div class="parents-column">
+              <span class="parent-title">
+                <span class="lang-en">Groom's Side</span>
+                <span class="lang-ar">عائلة العريس</span>
+              </span>
+              <p class="parent-name">Mostafa's Family</p>
+              <span class="parent-location">
+                <span class="lang-en">Alexandria, Egypt</span>
+                <span class="lang-ar">الإسكندرية، مصر</span>
+              </span>
+            </div>
+            
+            <div class="card-vertical-divider"></div>
+            
+            <div class="parents-column">
+              <span class="parent-title">
+                <span class="lang-en">Bride's Side</span>
+                <span class="lang-ar">عائلة العروس</span>
+              </span>
+              <p class="parent-name">Zienab's Family</p>
+              <span class="parent-location">
+                <span class="lang-en">Alexandria, Egypt</span>
+                <span class="lang-ar">الإسكندرية، مصر</span>
+              </span>
+            </div>
+          </div>
+          
+          <div class="ceremony-details">
+            <p class="ceremony-announcement" style="margin-bottom: 25px;">
+              <span class="lang-en">WITH JOYFUL HEARTS WE ANNOUNCE THE WEDDING OF OUR CHILDREN</span>
+              <span class="lang-ar">بقلوب مليئة بالفرح نعلن عن زفاف أولادنا</span>
+            </p>
+          </div>
+
+          <!-- Groom & Bride highlights inside the Ceremony Card -->
+          <div class="couple-highlight-inside">
+            <div class="couple-column">
+              <h3 class="person-name">Mostafa</h3>
+              <span class="person-title">
+                <span class="lang-en">THE GROOM</span>
+                <span class="lang-ar">العريس</span>
+              </span>
+            </div>
+            <div class="couple-ampersand">&amp;</div>
+            <div class="couple-column">
+              <h3 class="person-name">Zienab</h3>
+              <span class="person-title">
+                <span class="lang-en">THE BRIDE</span>
+                <span class="lang-ar">العروس</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Venue & Date Ceremony Footer details -->
+          <div class="ceremony-time-badge-box">
+            <p class="ceremony-location-subtext">
+              <span class="lang-en">WEDDING CEREMONY AT GOLDEN HALL</span>
+              <span class="lang-ar">عقد القران والزفاف بالقاعة الذهبية</span>
+            </p>
+            
+            <div class="reception-day-badge">
+              <span class="day-lbl">
+                <span class="lang-en">FRIDAY</span>
+                <span class="lang-ar">الجمعة</span>
+              </span>
+              <span class="time-lbl">7:00 PM</span>
+            </div>
+            
+            <div class="reception-calendar-date">
+              <span class="date-num">16</span>
+              <div class="card-vertical-divider" style="height: 46px;"></div>
+              <div class="date-month-year">
+                <span class="month-lbl">
+                  <span class="lang-en">OCTOBER</span>
+                  <span class="lang-ar">أكتوبر</span>
+                </span>
+                <span class="year-lbl">2026</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Photo Cards Gallery Section -->
+      <section class="gallery-section">
+        <span class="badge">
+          <span class="lang-en">Moments &amp; Memories</span>
+          <span class="lang-ar">ذكريات تجمعنا</span>
+        </span>
+        <h2 class="section-title">
+          <span class="lang-en">OUR SWEET MOMENTS</span>
+          <span class="lang-ar">لحظاتنا وذكرياتنا سوا</span>
+        </h2>
+        <div class="section-divider">
+          <span class="line"></span>
+          <span class="symbol">❦</span>
+          <span class="line"></span>
+        </div>
+
+        <!-- Gallery lead caption for sharing photos -->
+        <p class="gallery-lead-caption">
+          <span class="lang-ar">بنحبكم جداً وحقيقي نفسنا نشوف صور أصحابنا وأهلنا الحلوين في الفرح، ونشوف كل الذكريات اللي عيونكم خدتهالنا لليوم ده! سايبينلكم لينك درايف مخصوص عشان ترفعوا عليه كل الصور والفيديوهات اللي صورتوها عشان تفضل محفورة في قلوبنا سوا ❤️📸</span>
+          <span class="lang-en">We love you all so much and truly can't wait to see photos of our wonderful friends and family at the wedding! We want to gather all the memories you capture for our special day. Here is a dedicated Drive link where you can upload all your photos and videos so we can cherish them forever ❤️📸</span>
+        </p>
+
+        <!-- Coverflow Slider Structure -->
+        <div class="gallery-container">
+          <div class="gallery-track">
+            <!-- Slide 1 -->
+            <div class="gallery-slide">
+              <img src="images/couple1.jpg" alt="Mostafa & Zienab 1">
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="gallery-slide">
+              <img src="images/couple2.jpg" alt="Mostafa & Zienab 2">
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="gallery-slide">
+              <img src="images/couple3.jpg" alt="Mostafa & Zienab 3">
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="gallery-slide">
+              <img src="images/couple4.jpg" alt="Mostafa & Zienab 4">
+            </div>
+
+            <!-- Slide 5 -->
+            <div class="gallery-slide">
+              <img src="images/couple5.jpg" alt="Mostafa & Zienab 5">
+            </div>
+          </div>
+          
+          <div class="gallery-dots">
+            <span class="dot" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+            <span class="dot" data-slide="3"></span>
+            <span class="dot" data-slide="4"></span>
+          </div>
+        </div>
+
+        <!-- Shared Memories & Drive Upload Box -->
+        <div class="gallery-share-box">
+          <a href="https://drive.google.com/drive/folders/13rldbPRYE1SBJiOQTD4tuCTolg3ff6b6" target="_blank" rel="noopener noreferrer" class="btn-drive-share" id="drive-upload-link">
+            <svg class="drive-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+            </svg>
+            <span class="lang-ar">اضغطوا هنا لرفع صوركم على Google Drive ↗</span>
+            <span class="lang-en">Upload Your Photos &amp; Videos (Google Drive) ↗</span>
+          </a>
+          
+          <p class="drive-subnote">
+            <span class="lang-ar">تقدروا ترفعوا الصور والفيديوهات مباشرة من الموبايل بسهولة ✨</span>
+            <span class="lang-en">You can easily upload photos &amp; videos directly from your mobile ✨</span>
+          </p>
+
+          <!-- Gentle reminder not to delete others' photos -->
+          <div class="drive-reminder-pill">
+            <span class="reminder-icon">🌸</span>
+            <span class="lang-ar"><strong>رجاء من القلب:</strong> بنثق في ذوقكم، من فضلكم بلاش حد يمسح أي صورة أو فيديو رفعها غيره عشان ذكريات كل حبايبنا تفضل كاملة ومحفوظة ❤️</span>
+            <span class="lang-en"><strong>A Heartfelt Note:</strong> Please do not delete any photos or videos uploaded by others so everyone's memories stay preserved ❤️</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reception Info Burgundy Card Section -->
+      <section class="burgundy-card relative-overflow-visible">
+        <!-- Overlapping flower decoration on the left -->
+        <img src="images/flower2-decoration.webp" alt="" class="card-flower-decor-left">
+
+        <div class="burgundy-card-content">
+          <span class="badge" style="color: var(--gold-light);">
+            <span class="lang-en">Reception Info</span>
+            <span class="lang-ar">حفل الاستقبال</span>
+          </span>
+          <h2 class="card-title">
+            <span class="lang-en">RECEPTION INFO</span>
+            <span class="lang-ar">تفاصيل الاستقبال</span>
+          </h2>
+          
+          <div class="reception-box">
+            <h4 class="reception-statement">
+              <span class="lang-en">The reception will take place at:</span>
+              <span class="lang-ar">يقام حفل استقبال الزفاف في:</span>
+            </h4>
+            
+            <div class="reception-day-badge">
+              <span class="day-lbl">
+                <span class="lang-en">FRIDAY</span>
+                <span class="lang-ar">الجمعة</span>
+              </span>
+              <span class="time-lbl">7:00 PM</span>
+            </div>
+            
+            <div class="reception-calendar-date">
+              <span class="date-num">16</span>
+              <div class="card-vertical-divider" style="height: 46px;"></div>
+              <div class="date-month-year">
+                <span class="month-lbl">
+                  <span class="lang-en">OCTOBER</span>
+                  <span class="lang-ar">أكتوبر</span>
+                </span>
+                <span class="year-lbl">2026</span>
+              </div>
+            </div>
+
+            <!-- Welcome / Reception Sub-schedule -->
+            <div class="reception-sub-times">
+              <div class="sub-time-item">
+                <span class="sub-time-lbl">
+                  <span class="lang-en">Starts</span>
+                  <span class="lang-ar">بداية الفرح</span>
+                </span>
+                <span class="sub-time-val">7:00 PM</span>
+              </div>
+              <div class="card-vertical-divider" style="height: 30px; display: block; margin: 0 20px; background-color: rgba(236,228,216,0.35);"></div>
+              <div class="sub-time-item">
+                <span class="sub-time-lbl">
+                  <span class="lang-en">Ends</span>
+                  <span class="lang-ar">نهاية الفرح</span>
+                </span>
+                <span class="sub-time-val">11:00 PM</span>
+              </div>
+            </div>
+
+            <!-- Punctuality / Starting Sharp at 7:00 PM Note -->
+            <div class="time-sharp-banner">
+              <div class="time-sharp-header">
+                <span>⏰</span>
+                <span class="lang-en">7:00 PM SHARP &bull; UNTIL 11:00 PM</span>
+                <span class="lang-ar">الفرح يبدأ الساعة ٧:٠٠ مساءً بالدقيقة وحتى ١١:٠٠ مساءً</span>
+              </div>
+              <p class="time-sharp-desc">
+                <span class="lang-ar">حابين جداً تشرفونا وتكونوا معانا من أول لحظة لآخر لحظة عشان نعيش كل لحظة سوا!</span>
+                <span class="lang-en">We would love for everyone to be with us from the very first moment to the end to share every joy!</span>
+              </p>
+            </div>
+
+            <!-- Countdown Timer Widget inside the card -->
+            <div class="countdown-inside-card">
+              <span class="countdown-title">
+                <span class="lang-en">Countdown</span>
+                <span class="lang-ar">العد التنازلي</span>
+              </span>
+              <div id="countdown-timer" class="countdown-timer-clean">
+                <span class="lang-en">Calculating...</span>
+                <span class="lang-ar">جاري الحساب...</span>
+              </div>
+            </div>
+
+            <!-- Month calendar nested inside reception card -->
+            <div class="calendar-widget-wrapper">
+              <div class="calendar-widget-inner">
+                <div class="calendar-header-inner">
+                  <span class="lang-en">October 2026</span>
+                  <span class="lang-ar">أكتوبر ٢٠٢٦</span>
+                </div>
+                <div class="calendar-days-grid-inner">
+                  <!-- Week headers -->
+                  <span class="wk-hdr">Mo</span><span class="wk-hdr">Tu</span><span class="wk-hdr">We</span><span class="wk-hdr">Th</span><span class="wk-hdr">Fr</span><span class="wk-hdr">Sa</span><span class="wk-hdr">Su</span>
+                  <!-- Days padding: Oct 1st is Thursday -->
+                  <span></span><span></span><span></span><span>1</span><span>2</span><span>3</span><span>4</span>
+                  <span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span>
+                  <span>12</span><span>13</span><span>14</span><span>15</span><span class="wedding-day-highlight-inner" title="Wedding Day!">16</span><span>17</span><span>18</span>
+                  <span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span>
+                  <span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="actions-row-inner" style="margin-top: 20px; width: 100%; display: flex; justify-content: center;">
+              <!-- Calendar link -->
+              <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Mostafa+%26+Zienab%27s+Wedding&dates=20261016T170000Z/20261016T210000Z&details=Join+us+to+celebrate+the+wedding+of+Mostafa+and+Zienab!&location=The+Golden+Hall,+Al-Fateh+Club,+Northern+District" target="_blank" class="btn-link-clean">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
+                <span class="lang-en">Add to Calendar</span>
+                <span class="lang-ar">إضافة إلى التقويم</span>
+              </a>
+            </div>
+
+
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Maps & Venue Location Section (Clean layout outside card) -->
+      <section class="venue-location-section">
+        <span class="badge">
+          <span class="lang-en">Location</span>
+          <span class="lang-ar">موقع الحفل</span>
+        </span>
+        <h3 class="venue-title">
+          <span class="lang-en">Wedding Venue Location</span>
+          <span class="lang-ar">مكان إقامة حفل الزفاف</span>
+        </h3>
+        
+        <p class="venue-name">
+          <span class="lang-en">The Golden Hall, Al-Fateh Club</span>
+          <span class="lang-ar">القاعة الذهبية في نادي الفتح</span>
+        </p>
+        <p class="venue-address">
+          <span class="lang-en">The Golden Hall, Al-Fateh Club, Northern District, Alexandria</span>
+          <span class="lang-ar">القاعة الذهبية في نادي الفتح بالمنطقة الشمالية، الإسكندرية</span>
+        </p>
+
+        <a href="https://maps.app.goo.gl/Grhm7LvoVEcZbrn26" target="_blank" rel="noopener noreferrer" class="btn-link solid">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          <span class="lang-en">Open Google Maps</span>
+          <span class="lang-ar">فتح خرائط جوجل</span>
+        </a>
+      </section>
+
+
+      <!-- Attire Dress Code Section -->
+      <section class="dresscode-section">
+        <span class="badge">
+          <span class="lang-en">Dress Code</span>
+          <span class="lang-ar">قواعد اللباس</span>
+        </span>
+        <h2 class="section-title">
+          <span class="lang-en">DRESS CODE</span>
+          <span class="lang-ar">قواعد اللباس والملابس</span>
+        </h2>
+        <p class="attire-description">
+          <span class="lang-en">None, but brown shades are preferred</span>
+          <span class="lang-ar">لا يوجد قواعد محددة، ولكن يفضل درجات اللون البني</span>
+        </p>
+
+        <div class="colors-swatch">
+          <div class="swatch-item">
+            <div class="swatch-circle" style="background-color: #3D2314;"></div>
+            <span class="swatch-label">Dark Brown</span>
+          </div>
+
+          <div class="swatch-item">
+            <div class="swatch-circle" style="background-color: #6F4E37;"></div>
+            <span class="swatch-label">Chestnut</span>
+          </div>
+
+          <div class="swatch-item">
+            <div class="swatch-circle" style="background-color: #C19A6B;"></div>
+            <span class="swatch-label">Camel</span>
+          </div>
+
+          <div class="swatch-item">
+            <div class="swatch-circle" style="background-color: #D2B48C; border: 1.5px solid #51141930;"></div>
+            <span class="swatch-label">Tan</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Photo Booth Section -->
+      <section class="photobooth-section">
+        <span class="badge">
+          <span class="lang-en">Wedding Photo Booth</span>
+          <span class="lang-ar">فوتوبوث الفرح</span>
+        </span>
+        <h2 class="section-title">
+          <span class="lang-en">WEDDING PHOTO BOOTH</span>
+          <span class="lang-ar">الفوتوبوث مستنيكم 📸</span>
+        </h2>
+        <div class="section-divider">
+          <span class="line"></span>
+          <span class="symbol">❦</span>
+          <span class="line"></span>
+        </div>
+
+        <div class="photobooth-container">
+          <div class="photobooth-card">
+            <div class="photobooth-img-wrapper">
+              <img src="images/photobooth.jpg" alt="Wedding Photo Booth">
+              <span class="photobooth-tag">
+                <span class="lang-en">All Night Long</span>
+                <span class="lang-ar">طوال فترة الفرح</span>
+              </span>
+            </div>
+
+            <div class="photobooth-content">
+              <h3 class="photobooth-heading">
+                <span class="lang-en">Take Your Printed Keepsake Photo! 📸</span>
+                <span class="lang-ar">التقطوا صورتكم التذكارية معنا! 📸</span>
+              </h3>
+              
+              <p class="photobooth-message">
+                <span class="lang-ar">فرحتنا بوجودكم مابتكملش إلا بابتساماتكم الحلوة! مجهزينلكم فوتوبوث مخصوص، طوال ساعات الفرح عشان كل حبيب وقريب ياخد صورة تذكارية فورية تفكره باليوم وفرحتنا سوا.. الفوتوبوث محجوز ومتاح للجميع طول وقت الفرح فكدا كدا إن شاء الله كلكم هتلحقوا تتصوروا وتخلدوا اللحظة معانا! ❤️✨</span>
+                <span class="lang-en">Our celebration wouldn't be complete without your wonderful smiles! We've prepared a special instant Photo Booth available all evening long. We would love each and every one of you to take home a printed keepsake photo to remember this special day. The booth is booked for the entire duration of the wedding, so everyone will have plenty of time to take their photos! ❤️✨</span>
+              </p>
+
+              <div class="photobooth-perk-badge">
+                <span class="lang-ar">✨ صور مطبوعة فورية &bull; متاح طوال ساعات الفرح</span>
+                <span class="lang-en">✨ Instant Printed Keepsakes &bull; Available All Night</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+
+      <!-- Wishes Guestbook Section -->
+      <section class="wishes-section">
+        <span class="badge">
+          <span class="lang-en">Guestbook</span>
+          <span class="lang-ar">دفتر التهاني</span>
+        </span>
+        <h2 class="section-title">
+          <span class="lang-en">Guestbook</span>
+          <span class="lang-ar">ركن التهاني والأمنيات</span>
+        </h2>
+        <div class="section-divider">
+          <span class="line"></span>
+          <span class="symbol">❦</span>
+          <span class="line"></span>
+        </div>
+
+        <form id="wishes-form" class="wish-form">
+          <div class="form-group">
+            <label>
+              <span class="lang-en">Your Name*</span>
+              <span class="lang-ar">الاسم بالكامل*</span>
+            </label>
+            <input type="text" id="wish-name" required placeholder="Enter your name">
+          </div>
+          <div class="form-group">
+            <label>
+              <span class="lang-en">Your Wish*</span>
+              <span class="lang-ar">تهنئتك الخاصة*</span>
+            </label>
+            <textarea id="wish-text" rows="3" required placeholder="Leave your congratulations..."></textarea>
+          </div>
+          <button type="submit" class="btn-submit">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            <span class="lang-en">Submit Wish</span>
+            <span class="lang-ar">إرسال التهنئة</span>
+          </button>
+        </form>
+
+        <div id="wishes-feed" class="wishes-feed"></div>
+      </section>
+
+      <!-- Footer copyright info -->
+      <footer>
+        <p>© 2026 Mostafa &amp; Zienab</p>
+      </footer>
+      
+    </div>
+  </div>
+
+  <!-- RSVP Confirmation Modal Form -->
+  <div id="rsvp-modal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>
+          <span class="lang-en">RSVP Response</span>
+          <span class="lang-ar">نموذج تأكيد الحضور</span>
+        </h3>
+        <span class="sub">
+          <span class="lang-en">Attendance Form</span>
+          <span class="lang-ar">يرجى تسجيل بياناتك</span>
+        </span>
+      </div>
+      
+      <div class="modal-body">
+        <form id="rsvp-form" class="space-y-4">
+          
+          <div class="form-group">
+            <label>
+              <span class="lang-en">Guest Full Name*</span>
+              <span class="lang-ar">الاسم الكريم بالكامل*</span>
+            </label>
+            <input type="text" id="rsvp-name" required placeholder="Enter your name">
+          </div>
+
+          <div class="form-group">
+            <label>
+              <span class="lang-en">Will you attend?</span>
+              <span class="lang-ar">موقف الحضور الكريم؟</span>
+            </label>
+            <div style="display: flex; gap: 12px; margin-top: 5px;">
+              <button type="button" id="rsvp-attending-yes" class="modal-btn submit" style="flex: 1; padding: 10px;">
+                <span class="lang-en">Yes, Attending</span>
+                <span class="lang-ar">نعم، سأحضر بكل سرور</span>
+              </button>
+              <button type="button" id="rsvp-attending-no" class="modal-btn cancel" style="flex: 1; padding: 10px;">
+                <span class="lang-en">No, Regretfully Decline</span>
+                <span class="lang-ar">أعتذر بكل أسف</span>
+              </button>
+            </div>
+            <input type="hidden" id="rsvp-attending" value="yes">
+          </div>
+
+          <div id="rsvp-guests-wrapper">
+            <div class="form-group">
+              <label>
+                <span class="lang-en">Number of Guests</span>
+                <span class="lang-ar">عدد المرافقين معك؟</span>
+              </label>
+              <select id="rsvp-guests">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>
+                <span class="lang-en">Need Shuttle Transport?</span>
+                <span class="lang-ar">هل بحاجة لمواصلات الحفل؟</span>
+              </label>
+              <select id="rsvp-shuttle">
+                <option value="no">No, thank you</option>
+                <option value="yes">Yes, please</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>
+                <span class="lang-en">Meal/Dietary Notes</span>
+                <span class="lang-ar">أي ملاحظات حول نوعية الوجبات؟</span>
+              </label>
+              <input type="text" id="rsvp-diet" placeholder="Vegan, allergies, etc.">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>
+              <span class="lang-en">Wish for the Couple (Optional)</span>
+              <span class="lang-ar">رسالة تهنئة للعروسين (اختياري)</span>
+            </label>
+            <textarea id="rsvp-wish" rows="2" placeholder="Leave a congratulatory message..."></textarea>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" id="rsvp-cancel" class="modal-btn cancel">
+              <span class="lang-en">Cancel</span>
+              <span class="lang-ar">إلغاء</span>
+            </button>
+            <button type="submit" class="modal-btn submit">
+              <span class="lang-en">Submit</span>
+              <span class="lang-ar">تأكيد الإرسال</span>
+            </button>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gift Registry Details Modal Box -->
+  <div id="gift-modal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="gift-icon">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h17.25c.621 0 1.125-.504 1.125-1.125V9.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+        </svg>
+        <h3>
+          <span class="lang-en">Wedding Gift Box</span>
+          <span class="lang-ar">صندوق هدايا الزفاف</span>
+        </h3>
+        <span class="sub">
+          <span class="lang-en">Gift Registry</span>
+          <span class="lang-ar">تفاصيل تقديم التهاني والهدايا</span>
+        </span>
+      </div>
+      
+      <div class="modal-body">
+        <p class="gift-text">
+          <span class="lang-en">Your presence at our wedding is the greatest gift of all. However, if you wish to honor us with a gift, we have set up transfer details below:</span>
+          <span class="lang-ar">حضوركم الكريم هو أكبر هدية نتمناها لمشاركتنا يوم فرحتنا! ولكن إذا كنتم ترغبون في إهدائنا شيئاً مميزاً لبدء حياتنا الزوجية الجديدة، إليكم تفاصيل الحسابات البنكية المخصصة:</span>
+        </p>
+        
+        <div class="bank-info-box">
+          
+          <div class="bank-item">
+            <span class="title-lbl">Zelle Transfer (Chase Bank)</span>
+            <p class="acc-val">Margaret Sinclair</p>
+            <p class="email-val">theodore.sinclair@email.com</p>
+          </div>
+
+          <div class="bank-divider"></div>
+
+          <div class="bank-item">
+            <span class="title-lbl">PayPal Account</span>
+            <p class="paypal-link">paypal.me/theoandjo</p>
+          </div>
+          
+        </div>
+
+        <div class="modal-actions" style="margin-top: 25px;">
+          <button id="gift-close" class="modal-btn close">
+            <span class="lang-en">Close</span>
+            <span class="lang-ar">إغلاق</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js?v=18"></script>
+</body>
+</html>
