@@ -328,26 +328,43 @@ document.addEventListener('DOMContentLoaded', () => {
     giftModal.classList.remove('active');
   });
 
-  // 6. Wishes Guestbook Logic
-  const defaultWishes = [];
-  
-  function getWishes() {
-    const local = localStorage.getItem('wedding_wishes_v3');
+  // 6. Wishes Guestbook Logic (Persistent Cloud Storage + Instant Local Cache)
+  const CLOUD_WISHES_URL = 'https://api.restful-api.dev/objects/ff808181a09d98f701a0aa90d72d1d69';
+  const defaultWishes = [
+    {
+      name: 'زينب & مصطفى',
+      text: 'نورتم فرحتنا وشاركتونا أجمل يوم في حياتنا، شكراً لكل كلمة حلوة وتهنئة من قلوبكم! ❤️✨',
+      date: '١٦ أكتوبر ٢٠٢٦'
+    }
+  ];
+
+  function getLocalWishes() {
+    const local = localStorage.getItem('wedding_wishes_v5');
     if (local) {
       try {
-        return JSON.parse(local);
+        const parsed = JSON.parse(local);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
       } catch (e) {
-        return [];
+        return defaultWishes;
       }
     }
     return defaultWishes;
   }
-  
+
+  function saveLocalWishes(list) {
+    try {
+      localStorage.setItem('wedding_wishes_v5', JSON.stringify(list));
+    } catch (e) {
+      console.error('LocalStorage save error:', e);
+    }
+  }
+
+  let allWishes = getLocalWishes();
+
   function renderWishes() {
-    const list = getWishes();
     wishesFeed.innerHTML = '';
     
-    if (list.length === 0) {
+    if (allWishes.length === 0) {
       const emptyText = isRtl
         ? 'كن أول من يكتب تهنئة للعروسين في دفتر التهاني ❤️✨'
         : 'Be the first to leave your congratulations for the couple! ❤️✨';
@@ -359,32 +376,74 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    list.forEach(item => {
+    allWishes.forEach(item => {
       const wishDiv = document.createElement('div');
       wishDiv.className = 'wish-item';
       wishDiv.innerHTML = `
         <div class="wish-header">
           <span class="wish-name">${escapeHTML(item.name)}</span>
-          <span class="wish-date">${item.date}</span>
+          <span class="wish-date">${escapeHTML(item.date)}</span>
         </div>
         <p class="wish-text">${escapeHTML(item.text)}</p>
       `;
       wishesFeed.appendChild(wishDiv);
     });
   }
-  
-  function addWishToList(name, text) {
-    const list = getWishes();
-    const newWishItem = {
-      name: name,
-      text: text,
-      date: isRtl ? 'الآن' : 'Just now'
-    };
-    list.unshift(newWishItem);
-    localStorage.setItem('wedding_wishes_v3', JSON.stringify(list));
-    renderWishes();
+
+  async function syncWishesFromCloud() {
+    try {
+      const res = await fetch(CLOUD_WISHES_URL);
+      if (res.ok) {
+        const json = await res.json();
+        if (json && json.data && Array.isArray(json.data.wishes)) {
+          allWishes = json.data.wishes;
+          saveLocalWishes(allWishes);
+          renderWishes();
+        }
+      }
+    } catch (err) {
+      console.log('Using local wishes fallback:', err);
+    }
   }
-  
+
+  async function pushWishesToCloud(list) {
+    try {
+      await fetch(CLOUD_WISHES_URL, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: 'mostafa_and_zienab_wedding_wishes_2026',
+          data: {
+            wishes: list
+          }
+        })
+      });
+    } catch (err) {
+      console.error('Failed to sync wish to cloud:', err);
+    }
+  }
+
+  function addWishToList(name, text) {
+    const formattedDate = new Intl.DateTimeFormat(isRtl ? 'ar-EG' : 'en-US', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    }).format(new Date());
+
+    const newWishItem = {
+      name: name.trim(),
+      text: text.trim(),
+      date: formattedDate
+    };
+
+    allWishes.unshift(newWishItem);
+    saveLocalWishes(allWishes);
+    renderWishes();
+    pushWishesToCloud(allWishes);
+  }
+
   wishesForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const wName = document.getElementById('wish-name').value;
@@ -395,8 +454,9 @@ document.addEventListener('DOMContentLoaded', () => {
       wishesForm.reset();
     }
   });
-  
+
   renderWishes();
+  syncWishesFromCloud();
 
   // Helper utility to escape HTML
   function escapeHTML(str) {
@@ -685,7 +745,6 @@ document.addEventListener('DOMContentLoaded', () => {
       '.gallery-container',
       '.gallery-share-box',
       '.venue-location-section',
-      '.dresscode-section',
       '.photobooth-section',
       '.photobooth-card',
       '.wishes-section'
