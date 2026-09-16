@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const mainInvitation = document.getElementById('main-invitation');
   const btnOpen = document.querySelector('.btn-open');
   const waxSeal = document.querySelector('.wax-seal');
+  const realisticEnvelope = document.getElementById('realistic-envelope');
   const bgAudio = document.getElementById('bg-audio');
   const musicControlBtn = document.getElementById('music-control');
   
@@ -203,10 +204,16 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('click', playMusicFallback);
   document.addEventListener('touchstart', playMusicFallback);
 
+  let isOpeningEnvelope = false;
+
   function openEnvelope() {
-    envelopeOverlay.classList.add('opened');
-    mainInvitation.classList.add('visible');
-    
+    if (isOpeningEnvelope) return;
+    isOpeningEnvelope = true;
+
+    if (realisticEnvelope) {
+      realisticEnvelope.classList.add('opening');
+    }
+
     // Play music when they open if it hasn't already started
     playMusic();
     
@@ -217,24 +224,39 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < 12; i++) {
       setTimeout(() => {
         spawnDynamicGlassHeart(Math.random() * 90 + 5);
-      }, i * 85);
+      }, i * 75);
     }
 
-    // Anime.js entrance animation for hero elements
-    if (typeof anime !== 'undefined') {
-      anime({
-        targets: ['header .badge', 'header .names', 'header .section-divider', 'header .date'],
-        opacity: [0, 1],
-        translateY: [25, 0],
-        delay: anime.stagger(120, { start: 250 }),
-        duration: 850,
-        easing: 'easeOutCubic'
-      });
-    }
+    // After realistic 3D envelope opens (flap rotates up, letter rises), smoothly reveal main invitation
+    setTimeout(() => {
+      envelopeOverlay.classList.add('opened');
+      mainInvitation.classList.add('visible');
+
+      // Anime.js entrance animation for hero elements
+      if (typeof anime !== 'undefined') {
+        anime({
+          targets: ['header .badge', 'header .names', 'header .section-divider', 'header .date'],
+          opacity: [0, 1],
+          translateY: [25, 0],
+          delay: anime.stagger(120, { start: 200 }),
+          duration: 850,
+          easing: 'easeOutCubic'
+        });
+      }
+    }, 1000);
   }
   
-  btnOpen.addEventListener('click', openEnvelope);
-  waxSeal.addEventListener('click', openEnvelope);
+  if (btnOpen) btnOpen.addEventListener('click', (e) => { e.stopPropagation(); openEnvelope(); });
+  if (waxSeal) waxSeal.addEventListener('click', (e) => { e.stopPropagation(); openEnvelope(); });
+  if (realisticEnvelope) {
+    realisticEnvelope.addEventListener('click', openEnvelope);
+    realisticEnvelope.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openEnvelope();
+      }
+    });
+  }
 
   // 3. Audio Controls
   musicControlBtn.addEventListener('click', () => {

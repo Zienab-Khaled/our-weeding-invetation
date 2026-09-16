@@ -195,92 +195,314 @@ h1, h2, h3, h4 {
   z-index: 1;
 }
 
-/* Envelope Card */
-.envelope-card {
+/* ==========================================================================
+   REALISTIC 3D ENVELOPE SPLASH SCREEN
+   ========================================================================== */
+
+.envelope-scene {
   position: relative;
+  width: 94%;
+  max-width: 520px;
+  perspective: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 2;
-  width: 90%;
-  max-width: 580px;
-  background-color: var(--cream);
-  border: 1px solid rgba(81, 20, 25, 0.15);
-  border-radius: 16px;
-  padding: 85px 35px 55px 35px;
-  text-align: center;
-  box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.5), 
-              0 8px 24px rgba(0, 0, 0, 0.3), 
-              0 0 40px rgba(81, 20, 25, 0.15);
+  margin: auto;
 }
 
-/* Pulsing wax seal button */
+.realistic-envelope {
+  position: relative;
+  width: 100%;
+  max-width: 490px;
+  height: clamp(470px, 70vh, 550px);
+  background: linear-gradient(155deg, #4e1217 0%, #360a0e 100%);
+  border-radius: 18px;
+  box-shadow: 0 35px 80px -15px rgba(0, 0, 0, 0.75), 
+              0 0 0 1px rgba(201, 162, 74, 0.4),
+              inset 0 0 25px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  user-select: none;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+
+.realistic-envelope:hover {
+  transform: translateY(-4px);
+}
+
+/* Interior lining of the envelope */
+.env-interior {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  background: radial-gradient(circle at center, #2e080c 0%, #1a0305 100%);
+  border: 1px solid rgba(201, 162, 74, 0.2);
+  z-index: 1;
+}
+
+/* Invitation Letter Card Inside (Emerges on Opening) */
+.env-letter {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  right: 20px;
+  bottom: 18px;
+  background-color: var(--cream);
+  border-radius: 12px;
+  padding: 24px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(201, 162, 74, 0.5);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transform: translateY(0);
+  transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1) 0.32s, z-index 0.01s 0.38s;
+  pointer-events: none;
+}
+
+.realistic-envelope.opening .env-letter {
+  transform: translateY(-110px);
+  z-index: 7;
+}
+
+.env-letter-inner {
+  border: 1px solid rgba(201, 162, 74, 0.35);
+  outline: 1px dashed rgba(201, 162, 74, 0.3);
+  outline-offset: -6px;
+  padding: 24px 18px;
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.env-letter-crest {
+  font-size: 1.5rem;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+/* Envelope Body Side Pocket Folds */
+.env-pocket-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 50%;
+  background: linear-gradient(135deg, #440f13 0%, #30080b 100%);
+  clip-path: polygon(0 0, 0 100%, 100% 100%);
+  border-bottom-left-radius: 18px;
+  z-index: 3;
+  pointer-events: none;
+  filter: drop-shadow(2px 0 6px rgba(0, 0, 0, 0.35));
+}
+
+.env-pocket-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%;
+  background: linear-gradient(225deg, #440f13 0%, #30080b 100%);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  border-bottom-right-radius: 18px;
+  z-index: 3;
+  pointer-events: none;
+  filter: drop-shadow(-2px 0 6px rgba(0, 0, 0, 0.35));
+}
+
+/* Envelope Front Pocket Body (Visible Face When Closed) */
+.env-pocket-front {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 36%;
+  background: linear-gradient(180deg, #55151b 0%, #3c0c10 100%);
+  clip-path: polygon(0 28%, 50% 0%, 100% 28%, 100% 100%, 0 100%);
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.4);
+  border-top: 1px solid rgba(201, 162, 74, 0.3);
+}
+
+.env-front-content {
+  padding: 44px 22px 24px 22px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.env-monogram {
+  font-family: var(--font-viaoda);
+  font-size: 1.15rem;
+  color: var(--gold);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.env-front-names {
+  font-family: var(--font-viaoda);
+  font-size: clamp(1.8rem, 5.2vw, 2.5rem);
+  color: var(--cream);
+  line-height: 1.25;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.env-front-date {
+  font-family: var(--font-garamond);
+  font-size: 1.05rem;
+  color: var(--gold-light);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.env-front-invites {
+  font-size: 1rem !important;
+  color: rgba(255, 255, 255, 0.88) !important;
+  margin-bottom: 20px !important;
+  line-height: 1.6 !important;
+  max-width: 90%;
+}
+
+/* Top Triangular Flap (Folds DOWN over front when closed) */
+.env-top-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48%;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.2s 0.35s;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.realistic-envelope.opening .env-top-flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.env-flap-shape {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  background: linear-gradient(180deg, #64181f 0%, #461014 100%);
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.55));
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+}
+
+/* Pulsing Royal Wax Seal at the flap apex */
 .wax-seal {
   position: absolute;
-  top: 35px;
+  top: 100%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 60px;
-  height: 60px;
-  background: radial-gradient(circle at 30% 30%, #6e1a20, #380a0e);
+  width: 66px;
+  height: 66px;
+  background: radial-gradient(circle at 35% 35%, #881d25, #3c0a0d);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 3;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 20px rgba(81, 20, 25, 0.4);
-  animation: sealPulse 2s ease-in-out infinite;
-  transition: transform 0.2s;
+  pointer-events: auto;
+  z-index: 7;
+  border: 1.8px solid rgba(201, 162, 74, 0.7);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.6), 
+              0 0 16px rgba(201, 162, 74, 0.4);
+  animation: sealPulse 2.2s ease-in-out infinite;
+  transition: transform 0.3s, opacity 0.4s;
 }
 
 .wax-seal:hover {
-  animation-play-state: paused;
-  transform: translate(-50%, -50%) scale(1.1);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.realistic-envelope.opening .wax-seal {
+  animation: none;
+  opacity: 0.35;
+  transform: translate(-50%, -50%) scale(0.9);
 }
 
 .wax-seal svg {
-  width: 25px;
-  height: 25px;
+  width: 26px;
+  height: 26px;
   fill: var(--cream);
   color: var(--cream);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.wax-seal-pulse {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(201, 162, 74, 0.5);
+  opacity: 0.7;
+  animation: pulseRing 2.2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.22);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.22);
+    opacity: 0;
+  }
 }
 
 @keyframes sealPulse {
   0%, 100% {
     transform: translate(-50%, -50%) scale(1);
-    box-shadow: 0 4px 20px rgba(81, 20, 25, 0.4);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.6), 0 0 16px rgba(201, 162, 74, 0.4);
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.08);
-    box-shadow: 0 4px 28px rgba(81, 20, 25, 0.6);
+    transform: translate(-50%, -50%) scale(1.06);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.75), 0 0 24px rgba(201, 162, 74, 0.65);
   }
 }
 
-
-
-/* Cover Typography */
+/* Cover & Letter Typography */
 .envelope-names {
   font-family: var(--font-viaoda);
-  font-size: clamp(2.2rem, 8vw, 3.8rem);
+  font-size: clamp(2rem, 6.5vw, 3.2rem);
   color: var(--burgundy);
-  margin-bottom: 5px;
+  margin-bottom: 4px;
   letter-spacing: 1px;
-}
-
-.envelope-amp {
-  font-family: var(--font-garamond);
-  font-size: 1.5rem;
-  font-style: italic;
-  display: block;
-  margin: 5px 0;
-  opacity: 0.8;
 }
 
 .envelope-date {
   font-family: var(--font-garamond);
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   color: var(--burgundy-light);
-  letter-spacing: 3px;
-  margin-bottom: 25px;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
   text-transform: uppercase;
 }
 
@@ -289,11 +511,11 @@ h1, h2, h3, h4 {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .envelope-divider .line {
-  width: 50px;
+  width: 45px;
   height: 1px;
   background: linear-gradient(to right, transparent, var(--burgundy), transparent);
 }
@@ -306,34 +528,39 @@ h1, h2, h3, h4 {
 
 .envelope-invites {
   font-family: var(--font-garamond);
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-style: italic;
   color: var(--text-muted);
-  margin-bottom: 35px;
+  margin-bottom: 25px;
 }
 
-/* Shiny Action Button */
+/* Shiny Action Button: افتح هنا / OPEN */
 .btn-open {
   position: relative;
   overflow: hidden;
-  background-color: var(--burgundy);
-  color: var(--cream);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: linear-gradient(135deg, #c9a24a 0%, #a88330 100%);
+  color: #2e070b;
+  border: 1px solid rgba(255, 255, 255, 0.4);
   font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 0.9rem;
-  letter-spacing: 3px;
-  padding: 14px 45px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 2.5px;
+  padding: 13px 45px;
   border-radius: 50px;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(81, 20, 25, 0.35);
-  transition: transform 0.2s, background-color 0.2s;
+  box-shadow: 0 4px 18px rgba(201, 162, 74, 0.45), 
+              0 2px 6px rgba(0, 0, 0, 0.35);
+  transition: transform 0.22s, box-shadow 0.22s, filter 0.22s;
   outline: none;
+  z-index: 5;
+  pointer-events: auto;
 }
 
 .btn-open:hover {
-  background-color: var(--burgundy-light);
   transform: scale(1.05);
+  box-shadow: 0 6px 26px rgba(201, 162, 74, 0.7), 
+              0 3px 8px rgba(0, 0, 0, 0.45);
+  filter: brightness(1.08);
 }
 
 .btn-open:active {
@@ -346,7 +573,7 @@ h1, h2, h3, h4 {
   top: 0;
   height: 100%;
   width: 60px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
   animation: shine 3.5s ease-in-out infinite;
 }
 
@@ -1038,8 +1265,6 @@ header .date {
 .btn-link svg {
   width: 14px;
   height: 14px;
-}
-
 }
 
 /* Timeline List inside Burgundy Card */
