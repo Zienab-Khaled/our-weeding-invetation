@@ -137,86 +137,52 @@ h1, h2, h3, h4 {
 }
 
 /* Falling heart particles wrapper */
-/* Full-Screen Floating Glassy Hearts System (Active on Landing & During Entire Scroll) */
+/* Ultra-Lightweight Floating Glassy Hearts System (60FPS Locked, Zero CPU/GPU Lag) */
 .floating-glass-hearts-layer {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
   pointer-events: none !important;
-  z-index: 28;
+  z-index: 15;
   overflow: hidden;
+  contain: strict;
 }
 
 .glassy-heart-item {
   position: absolute;
+  top: 0;
+  left: 0;
   pointer-events: none !important;
-  will-change: transform, opacity;
-  animation-name: floatGlassHeart;
-  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  animation-iteration-count: infinite;
-  filter: drop-shadow(0 6px 16px rgba(81, 20, 25, 0.15)) drop-shadow(0 2px 6px rgba(255, 255, 255, 0.45));
-  transform-style: preserve-3d;
+  will-change: transform;
+  contain: layout style paint;
+  animation: floatGlassHeart linear infinite;
+  opacity: 0.85;
 }
 
 .glassy-heart-svg {
   display: block;
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 2px 4px rgba(201, 162, 74, 0.25));
 }
 
 @keyframes floatGlassHeart {
   0% {
-    transform: translateY(106vh) translateX(0) rotate(0deg) scale(0.72);
-    opacity: 0;
-  }
-  8% {
-    opacity: 0.88;
-    transform: translateY(92vh) translateX(calc(var(--sway) * 0.15)) rotate(calc(var(--rot) * 0.18)) scale(0.9);
-  }
-  50% {
-    opacity: 0.95;
-    transform: translateY(50vh) translateX(calc(var(--sway) * 0.75)) rotate(calc(var(--rot) * 0.65)) scale(1.02);
-  }
-  85% {
-    opacity: 0.88;
-    transform: translateY(12vh) translateX(var(--sway)) rotate(var(--rot)) scale(0.94);
-  }
-  100% {
-    transform: translateY(-12vh) translateX(calc(var(--sway) * 1.15)) rotate(calc(var(--rot) * 1.2)) scale(0.75);
-    opacity: 0;
-  }
-}
-
-/* Extra dynamic hearts spawned during user scrolling */
-.glassy-heart-burst {
-  position: absolute;
-  pointer-events: none !important;
-  will-change: transform, opacity;
-  animation: burstGlassHeart 4.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  filter: drop-shadow(0 8px 20px rgba(81, 20, 25, 0.18)) drop-shadow(0 2px 8px rgba(255, 255, 255, 0.55));
-}
-
-@keyframes burstGlassHeart {
-  0% {
-    transform: translateY(102vh) translateX(0) rotate(0deg) scale(0.65);
+    transform: translate3d(var(--x-start), 105vh, 0) rotate(0deg) scale(0.75);
     opacity: 0;
   }
   12% {
-    opacity: 0.92;
-    transform: translateY(75vh) translateX(calc(var(--sway) * 0.3)) rotate(calc(var(--rot) * 0.35)) scale(1.08);
+    opacity: 0.82;
   }
   50% {
-    opacity: 0.92;
-    transform: translateY(35vh) translateX(calc(var(--sway) * 0.8)) rotate(calc(var(--rot) * 0.75)) scale(1.02);
+    opacity: 0.88;
+    transform: translate3d(var(--x-mid), 50vh, 0) rotate(var(--rot-mid)) scale(1);
   }
   88% {
-    opacity: 0.65;
-    transform: translateY(3vh) translateX(var(--sway)) rotate(var(--rot)) scale(0.88);
+    opacity: 0.82;
   }
   100% {
-    transform: translateY(-10vh) translateX(calc(var(--sway) * 1.1)) rotate(calc(var(--rot) * 1.15)) scale(0.65);
+    transform: translate3d(var(--x-end), -10vh, 0) rotate(var(--rot-end)) scale(0.75);
     opacity: 0;
   }
 }
@@ -1721,6 +1687,14 @@ footer {
   margin: 40px auto;
   height: 290px;
   perspective: 1000px;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+
+.gallery-container:active {
+  cursor: grabbing;
 }
 
 .gallery-track {
@@ -1731,6 +1705,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
+  touch-action: pan-y;
 }
 
 .gallery-slide {
@@ -1745,12 +1720,70 @@ footer {
   transform-style: preserve-3d;
   opacity: 0;
   pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .gallery-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* Touch & Click Navigation Arrows */
+.gallery-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(81, 20, 25, 0.8);
+  border: 1px solid rgba(201, 162, 74, 0.55);
+  color: #faf6f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 120;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transition: background 0.25s, transform 0.2s;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.gallery-nav-arrow:hover {
+  background: rgba(81, 20, 25, 0.98);
+  border-color: var(--gold);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.gallery-nav-arrow:active {
+  transform: translateY(-50%) scale(0.92);
+}
+
+.gallery-nav-arrow.prev-arrow {
+  left: -8px;
+}
+
+.gallery-nav-arrow.next-arrow {
+  right: -8px;
+}
+
+@media (max-width: 480px) {
+  .gallery-nav-arrow {
+    width: 35px;
+    height: 35px;
+  }
+  .gallery-nav-arrow.prev-arrow {
+    left: 2px;
+  }
+  .gallery-nav-arrow.next-arrow {
+    right: 2px;
+  }
 }
 
 /* 3D coverflow classes */

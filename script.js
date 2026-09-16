@@ -131,118 +131,44 @@ document.addEventListener('DOMContentLoaded', () => {
   btnLangEn.addEventListener('click', () => setLanguage('en', true));
   btnLangAr.addEventListener('click', () => setLanguage('ar', true));
 
-  // 1. Floating Glassy Hearts System (Active on Landing Splash & During Entire Scroll)
+  // 1. Ultra-Lightweight Floating Glassy Hearts System (Zero-Lag, 60fps Locked)
   const glassHeartsLayer = document.getElementById('floating-glass-hearts-layer');
-  let heartIdCounter = 0;
 
-  function generateGlassHeartSVG(id) {
-    return `
-      <svg viewBox="0 0 32 32" class="glassy-heart-svg">
-        <defs>
-          <linearGradient id="gh-g-${id}" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="rgba(255, 255, 255, 0.88)" />
-            <stop offset="35%" stop-color="rgba(255, 225, 230, 0.58)" />
-            <stop offset="70%" stop-color="rgba(201, 162, 74, 0.45)" />
-            <stop offset="100%" stop-color="rgba(122, 31, 38, 0.38)" />
-          </linearGradient>
-          <linearGradient id="gh-s-${id}" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="rgba(255, 255, 255, 0.98)" />
-            <stop offset="50%" stop-color="rgba(255, 255, 255, 0.52)" />
-            <stop offset="100%" stop-color="rgba(201, 162, 74, 0.82)" />
-          </linearGradient>
-        </defs>
-        <path d="M16 28.5 C16 28.5 3 20.5 3 10.5 C3 5.5 7 2 11.5 2 C14 2 15.5 3.5 16 4.5 C16.5 3.5 18 2 20.5 2 C25 2 29 5.5 29 10.5 C29 20.5 16 28.5 16 28.5 Z" 
-              fill="url(#gh-g-${id})" 
-              stroke="url(#gh-s-${id})" 
-              stroke-width="1.3" />
-        <path d="M 8.5 5.5 C 10 3.8 13.2 3.8 14.5 5.8" 
-              stroke="rgba(255, 255, 255, 0.95)" 
-              stroke-width="1.3" 
-              stroke-linecap="round" 
-              fill="none" />
-        <circle cx="8.8" cy="6.2" r="1" fill="#ffffff" />
-        <path d="M 23.5 5.5 C 25 7 25.8 9.2 25.5 11.5" 
-              stroke="rgba(255, 255, 255, 0.6)" 
-              stroke-width="0.9" 
-              stroke-linecap="round" 
-              fill="none" />
-      </svg>
-    `;
-  }
-
-  // Create persistent ambient floating glassy hearts
-  function createAmbientGlassHearts(count = 24) {
+  function initGlassHearts() {
     if (!glassHeartsLayer) return;
+    glassHeartsLayer.innerHTML = '';
+    const count = 11; // Perfectly balanced: dreamy atmosphere with zero CPU/GPU overhead
+
     for (let i = 0; i < count; i++) {
       const heart = document.createElement('div');
       heart.className = 'glassy-heart-item';
-      
-      const id = ++heartIdCounter;
-      const left = Math.random() * 92 + 4; // 4% to 96%
-      const duration = 9 + Math.random() * 9; // 9s to 18s
-      const delay = -(Math.random() * duration); // negative delay so screen is immediately populated
-      const size = 16 + Math.random() * 22; // 16px to 38px
-      const sway = -45 + Math.random() * 90;
-      const rot = -35 + Math.random() * 70;
-      
+
+      const xStart = Math.random() * 88 + 6; // 6vw to 94vw
+      const sway = -30 + Math.random() * 60;
+      const xMid = xStart + sway * 0.5;
+      const xEnd = xStart + sway;
+      const rotMid = -25 + Math.random() * 50;
+      const rotEnd = -35 + Math.random() * 70;
+      const duration = 11 + Math.random() * 8; // 11s to 19s
+      const delay = -(Math.random() * duration); // pre-scattered across entire viewport height
+      const size = 18 + Math.random() * 16; // 18px to 34px
+
       heart.style.width = `${size}px`;
       heart.style.height = `${size}px`;
-      heart.style.left = `${left}%`;
       heart.style.animationDuration = `${duration}s`;
       heart.style.animationDelay = `${delay}s`;
-      heart.style.setProperty('--sway', `${sway}px`);
-      heart.style.setProperty('--rot', `${rot}deg`);
-      
-      heart.innerHTML = generateGlassHeartSVG(id);
+      heart.style.setProperty('--x-start', `${xStart}vw`);
+      heart.style.setProperty('--x-mid', `${xMid}vw`);
+      heart.style.setProperty('--x-end', `${xEnd}vw`);
+      heart.style.setProperty('--rot-mid', `${rotMid}deg`);
+      heart.style.setProperty('--rot-end', `${rotEnd}deg`);
+
+      heart.innerHTML = `<svg viewBox="0 0 32 32" class="glassy-heart-svg"><use href="#glass-heart-symbol"/></svg>`;
       glassHeartsLayer.appendChild(heart);
     }
   }
 
-  // Dynamic Glassy Heart Spawner (For scroll events and opening burst)
-  function spawnDynamicGlassHeart(xPercent = null) {
-    if (!glassHeartsLayer) return;
-    const heart = document.createElement('div');
-    heart.className = 'glassy-heart-burst';
-    
-    const id = ++heartIdCounter;
-    const left = (xPercent !== null) ? xPercent : (Math.random() * 90 + 5);
-    const size = 18 + Math.random() * 24; // 18px to 42px
-    const sway = -50 + Math.random() * 100;
-    const rot = -40 + Math.random() * 80;
-    const duration = 3.6 + Math.random() * 2.2; // 3.6s to 5.8s
-    
-    heart.style.width = `${size}px`;
-    heart.style.height = `${size}px`;
-    heart.style.left = `${left}%`;
-    heart.style.animationDuration = `${duration}s`;
-    heart.style.setProperty('--sway', `${sway}px`);
-    heart.style.setProperty('--rot', `${rot}deg`);
-    
-    heart.innerHTML = generateGlassHeartSVG(id);
-    glassHeartsLayer.appendChild(heart);
-    
-    heart.addEventListener('animationend', () => {
-      heart.remove();
-    });
-  }
-
-  createAmbientGlassHearts();
-
-  // Scroll Listener to dynamically increase floating glassy hearts during scroll
-  let scrollHeartThrottle = false;
-  window.addEventListener('scroll', () => {
-    if (!scrollHeartThrottle) {
-      scrollHeartThrottle = true;
-      // Spawn 1-2 dynamic glassy hearts rising as user scrolls
-      spawnDynamicGlassHeart();
-      if (Math.random() > 0.35) {
-        spawnDynamicGlassHeart();
-      }
-      setTimeout(() => {
-        scrollHeartThrottle = false;
-      }, 130);
-    }
-  }, { passive: true });
+  initGlassHearts();
 
   // 2. Envelope opening and Autoplay logic
   function playMusic() {
@@ -585,9 +511,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const initialLang = getUrlLanguage();
   setLanguage(initialLang, false);
 
-  // 9. Coverflow Photo Gallery Carousel Logic
+  // 9. Coverflow Photo Gallery Carousel Logic (Hand Swipe, Drag & Arrow Navigation)
+  const galleryContainer = document.getElementById('gallery-container') || document.querySelector('.gallery-container');
   const slides = document.querySelectorAll('.gallery-slide');
   const dots = document.querySelectorAll('.gallery-dots .dot');
+  const prevBtn = document.getElementById('gallery-prev-btn');
+  const nextBtn = document.getElementById('gallery-next-btn');
   let currentSlideIndex = 0;
 
   function updateGallery() {
@@ -617,6 +546,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function nextSlide() {
+    if (slides.length === 0) return;
+    currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+    updateGallery();
+  }
+
+  function prevSlide() {
+    if (slides.length === 0) return;
+    currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+    updateGallery();
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      nextSlide();
+      resetAutoSlide();
+    });
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      prevSlide();
+      resetAutoSlide();
+    });
+  }
+
   dots.forEach((dot) => {
     dot.addEventListener('click', () => {
       currentSlideIndex = parseInt(dot.getAttribute('data-slide'), 10);
@@ -635,20 +592,82 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Touch Swipe Gesture Support (Direct hand swiping for mobile)
+  if (galleryContainer) {
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+    let isSwiping = false;
+
+    galleryContainer.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchEndX = touchStartX;
+        touchEndY = touchStartY;
+        isSwiping = true;
+      }
+    }, { passive: true });
+
+    galleryContainer.addEventListener('touchmove', (e) => {
+      if (!isSwiping || e.touches.length !== 1) return;
+      touchEndX = e.touches[0].clientX;
+      touchEndY = e.touches[0].clientY;
+    }, { passive: true });
+
+    galleryContainer.addEventListener('touchend', () => {
+      if (!isSwiping) return;
+      isSwiping = false;
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
+
+      // Check if horizontal swipe was intentional (> 32px) and greater than vertical movement
+      if (Math.abs(diffX) > 32 && Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX < 0) {
+          // Swiped left -> Next photo
+          nextSlide();
+        } else {
+          // Swiped right -> Previous photo
+          prevSlide();
+        }
+        resetAutoSlide();
+      }
+    }, { passive: true });
+
+    // Mouse Drag Gesture Support (Desktop mouse drag)
+    let isMouseDown = false;
+    let mouseStartX = 0;
+
+    galleryContainer.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.gallery-nav-arrow') || e.target.closest('.gallery-dots')) return;
+      isMouseDown = true;
+      mouseStartX = e.clientX;
+    });
+
+    window.addEventListener('mouseup', (e) => {
+      if (!isMouseDown) return;
+      isMouseDown = false;
+      const diffX = e.clientX - mouseStartX;
+      if (Math.abs(diffX) > 38) {
+        if (diffX < 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+        resetAutoSlide();
+      }
+    });
+  }
+
   let autoSlide = setInterval(() => {
-    if (slides.length > 0) {
-      currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-      updateGallery();
-    }
+    nextSlide();
   }, 5000);
 
   function resetAutoSlide() {
     clearInterval(autoSlide);
     autoSlide = setInterval(() => {
-      if (slides.length > 0) {
-        currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-        updateGallery();
-      }
+      nextSlide();
     }, 5000);
   }
 
