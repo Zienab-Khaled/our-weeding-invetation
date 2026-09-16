@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Lora:ital,wght@0,400..700;1,400..700&family=Pattaya&family=Viaoda+Libre&family=Quicksand:wght@300;400;500;600;700&family=The+Nautigal:wght@400;700&display=swap">
-  <link rel="stylesheet" href="style.css?v=26">
+  <link rel="stylesheet" href="style.css?v=27">
 </head>
 <body>
 
@@ -57,81 +57,44 @@
     <!-- Falling Hearts/Petals Layer -->
     <div class="particles-container"></div>
 
-    <div class="envelope-scene">
-      <div class="realistic-envelope" id="realistic-envelope" role="button" aria-label="Open Wedding Invitation" tabindex="0">
-        
-        <!-- Back interior lining of the envelope -->
-        <div class="env-interior"></div>
-
-        <!-- Invitation Letter Card Inside (Emerges smoothly when opened) -->
-        <div class="env-letter" id="env-letter">
-          <div class="env-letter-inner">
-            <div class="env-letter-crest">❦</div>
-            <h2 class="envelope-names">
-              <span class="lang-en">Mostafa &amp; Zienab</span>
-              <span class="lang-ar">مصطفى &amp; زينب</span>
-            </h2>
-            <div class="envelope-divider">
-              <span class="line"></span>
-              <span class="symbol">❦</span>
-              <span class="line"></span>
-            </div>
-            <p class="envelope-date">
-              <span class="lang-en">October 16, 2026</span>
-              <span class="lang-ar">١٦ أكتوبر ٢٠٢٦</span>
-            </p>
-            <p class="envelope-invites">
-              <span class="lang-en">Cordially Invite You to Celebrate Their Wedding</span>
-              <span class="lang-ar">يتشرفون بدعوتكم لحضور حفل زفافهم ومشاركتهم أسعد اللحظات</span>
-            </p>
-          </div>
-        </div>
-
-        <!-- Front Pocket of the Envelope (Closed physical envelope appearance) -->
-        <div class="env-pocket-left"></div>
-        <div class="env-pocket-right"></div>
-        <div class="env-pocket-front">
-          <div class="env-front-content">
-            <div class="env-monogram">M &amp; Z</div>
-            <h1 class="env-front-names">
-              <span class="lang-en">Mostafa &amp; Zienab</span>
-              <span class="lang-ar">مصطفى &amp; زينب</span>
-            </h1>
-            <div class="envelope-divider">
-              <span class="line"></span>
-              <span class="symbol">❦</span>
-              <span class="line"></span>
-            </div>
-            <p class="env-front-date">
-              <span class="lang-en">October 16, 2026</span>
-              <span class="lang-ar">١٦ أكتوبر ٢٠٢٦</span>
-            </p>
-            <p class="envelope-invites env-front-invites">
-              <span class="lang-en">Cordially Invite You to Celebrate Their Wedding</span>
-              <span class="lang-ar">يتشرفون بدعوتكم لحضور حفل زفافهم ومشاركتهم أسعد اللحظات</span>
-            </p>
-            
-            <!-- Open Button explicitly requested: افتح هنا / OPEN -->
-            <button class="btn-open" id="btn-open-envelope" type="button" aria-label="Open Invitation">
-              <span class="lang-en">OPEN</span>
-              <span class="lang-ar">افتح هنا</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Top Triangular Flap (Folds DOWN tightly over the envelope when closed) -->
-        <div class="env-top-flap">
-          <div class="env-flap-shape"></div>
-          <!-- Pulsing Royal Wax Seal button to open -->
-          <div class="wax-seal" id="wax-seal" title="Click to Open">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-            </svg>
-            <span class="wax-seal-pulse"></span>
-          </div>
-        </div>
-
+    <div class="envelope-card">
+      <!-- Pulsing Wax Seal button to open -->
+      <div class="wax-seal" title="Click to Open">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
       </div>
+
+      <!-- Names -->
+      <h1 class="envelope-names">
+        <span class="lang-en">Mostafa &amp; Zienab</span>
+        <span class="lang-ar">مصطفى &amp; زينب</span>
+      </h1>
+
+      <!-- Divider -->
+      <div class="envelope-divider">
+        <span class="line"></span>
+        <span class="symbol">❦</span>
+        <span class="line"></span>
+      </div>
+
+      <!-- Date -->
+      <p class="envelope-date">
+        <span class="lang-en">October 16, 2026</span>
+        <span class="lang-ar">١٦ أكتوبر ٢٠٢٦</span>
+      </p>
+
+      <!-- Invitation statement -->
+      <p class="envelope-invites">
+        <span class="lang-en">Cordially Invite You to Celebrate Their Wedding</span>
+        <span class="lang-ar">يتشرفون بدعوتكم لحضور حفل زفافهم ومشاركتهم أسعد اللحظات</span>
+      </p>
+
+      <!-- Open Button -->
+      <button class="btn-open">
+        <span class="lang-en">OPEN</span>
+        <span class="lang-ar">افتح هنا</span>
+      </button>
     </div>
   </div>
 
@@ -810,6 +773,6 @@
 
   <!-- Anime.js Library for Smooth Scroll Animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
-  <script src="script.js?v=26"></script>
+  <script src="script.js?v=27"></script>
 </body>
 </html>
