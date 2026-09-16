@@ -336,10 +336,12 @@ document.addEventListener('DOMContentLoaded', () => {
     wishesFeed.innerHTML = '';
     
     if (list.length === 0) {
+      const emptyText = isRtl
+        ? 'كن أول من يكتب تهنئة للعروسين في دفتر التهاني ❤️✨'
+        : 'Be the first to leave your congratulations for the couple! ❤️✨';
       wishesFeed.innerHTML = `
-        <div class="empty-wishes-placeholder" style="text-align: center; padding: 25px 15px; color: var(--text-muted); font-size: 0.85rem; font-family: var(--font-arabic);">
-          <span class="lang-ar">كن أول من يكتب تهنئة للعروسين في دفتر التهاني ❤️✨</span>
-          <span class="lang-en">Be the first to leave your congratulations for the couple! ❤️✨</span>
+        <div class="empty-wishes-placeholder" style="text-align: center; padding: 25px 15px; color: var(--text-muted); font-size: 0.88rem; font-family: ${isRtl ? 'var(--font-arabic)' : 'inherit'};">
+          ${emptyText}
         </div>
       `;
       return;

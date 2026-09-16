@@ -78,6 +78,17 @@ html[dir="rtl"] .envelope-invites {
   line-height: 1.8;
 }
 
+/* Strict Language Visibility Rules (ensure Arabic and English are never shown together) */
+html[dir="rtl"] .lang-en,
+body.rtl-active .lang-en {
+  display: none !important;
+}
+
+html:not([dir="rtl"]) .lang-ar,
+body:not(.rtl-active) .lang-ar {
+  display: none !important;
+}
+
 /* Explicit Cairo font for all Arabic language tags */
 .lang-ar {
   font-family: 'Cairo', sans-serif !important;
@@ -1542,7 +1553,7 @@ footer {
 .card-flower-decor-right {
   position: absolute;
   right: -42px;
-  top: 80px;
+  top: 185px;
   width: 145px;
   max-width: 36%;
   height: auto;
@@ -1577,7 +1588,7 @@ footer {
   }
   .card-flower-decor-right {
     right: -28px;
-    top: 70px;
+    top: 165px;
     width: 120px;
   }
   .card-flower-decor-schedule {
