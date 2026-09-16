@@ -137,38 +137,96 @@ h1, h2, h3, h4 {
 }
 
 /* Falling heart particles wrapper */
+/* Full-Screen Floating Glassy Hearts System (Active on Landing & During Entire Scroll) */
+.floating-glass-hearts-layer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none !important;
+  z-index: 28;
+  overflow: hidden;
+}
+
+.glassy-heart-item {
+  position: absolute;
+  pointer-events: none !important;
+  will-change: transform, opacity;
+  animation-name: floatGlassHeart;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-iteration-count: infinite;
+  filter: drop-shadow(0 6px 16px rgba(81, 20, 25, 0.15)) drop-shadow(0 2px 6px rgba(255, 255, 255, 0.45));
+  transform-style: preserve-3d;
+}
+
+.glassy-heart-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 4px rgba(201, 162, 74, 0.25));
+}
+
+@keyframes floatGlassHeart {
+  0% {
+    transform: translateY(106vh) translateX(0) rotate(0deg) scale(0.72);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.88;
+    transform: translateY(92vh) translateX(calc(var(--sway) * 0.15)) rotate(calc(var(--rot) * 0.18)) scale(0.9);
+  }
+  50% {
+    opacity: 0.95;
+    transform: translateY(50vh) translateX(calc(var(--sway) * 0.75)) rotate(calc(var(--rot) * 0.65)) scale(1.02);
+  }
+  85% {
+    opacity: 0.88;
+    transform: translateY(12vh) translateX(var(--sway)) rotate(var(--rot)) scale(0.94);
+  }
+  100% {
+    transform: translateY(-12vh) translateX(calc(var(--sway) * 1.15)) rotate(calc(var(--rot) * 1.2)) scale(0.75);
+    opacity: 0;
+  }
+}
+
+/* Extra dynamic hearts spawned during user scrolling */
+.glassy-heart-burst {
+  position: absolute;
+  pointer-events: none !important;
+  will-change: transform, opacity;
+  animation: burstGlassHeart 4.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  filter: drop-shadow(0 8px 20px rgba(81, 20, 25, 0.18)) drop-shadow(0 2px 8px rgba(255, 255, 255, 0.55));
+}
+
+@keyframes burstGlassHeart {
+  0% {
+    transform: translateY(102vh) translateX(0) rotate(0deg) scale(0.65);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.92;
+    transform: translateY(75vh) translateX(calc(var(--sway) * 0.3)) rotate(calc(var(--rot) * 0.35)) scale(1.08);
+  }
+  50% {
+    opacity: 0.92;
+    transform: translateY(35vh) translateX(calc(var(--sway) * 0.8)) rotate(calc(var(--rot) * 0.75)) scale(1.02);
+  }
+  88% {
+    opacity: 0.65;
+    transform: translateY(3vh) translateX(var(--sway)) rotate(var(--rot)) scale(0.88);
+  }
+  100% {
+    transform: translateY(-10vh) translateX(calc(var(--sway) * 1.1)) rotate(calc(var(--rot) * 1.15)) scale(0.65);
+    opacity: 0;
+  }
+}
+
 .particles-container {
   position: absolute;
   inset: 0;
   pointer-events: none;
   overflow: hidden;
   z-index: 1;
-}
-
-.particle {
-  position: absolute;
-  top: -30px;
-  opacity: 0.65;
-  animation-name: fall;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-@keyframes fall {
-  0% {
-    transform: translateY(0) rotate(0deg) translateX(0);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.75;
-  }
-  90% {
-    opacity: 0.75;
-  }
-  100% {
-    transform: translateY(105vh) rotate(360deg) translateX(var(--sway));
-    opacity: 0;
-  }
 }
 
 /* Envelope Card */
@@ -1732,21 +1790,29 @@ footer {
 .gallery-dots {
   display: flex;
   justify-content: center;
-  gap: 8px;
-  margin-top: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 290px;
+  margin: 18px auto 0 auto;
+  gap: 6px;
 }
 
 .gallery-dots .dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background-color: rgba(81, 20, 25, 0.2);
+  background-color: rgba(81, 20, 25, 0.22);
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.25s;
+}
+
+.gallery-dots .dot:hover {
+  transform: scale(1.25);
 }
 
 .gallery-dots .dot.active {
   background-color: #511419;
+  transform: scale(1.3);
 }
 
 /* Reception Inside Card Sub-times and countdown */

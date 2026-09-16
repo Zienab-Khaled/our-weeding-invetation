@@ -131,39 +131,118 @@ document.addEventListener('DOMContentLoaded', () => {
   btnLangEn.addEventListener('click', () => setLanguage('en', true));
   btnLangAr.addEventListener('click', () => setLanguage('ar', true));
 
-  // 1. Generate ambient falling particles (hearts and petals)
-  const particlesContainer = document.querySelector('.particles-container');
-  const colors = ['#ece4d8', '#c9a24a', '#7a1f26', '#a8323b'];
-  
-  function createParticles() {
-    for (let i = 0; i < 25; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'particle';
+  // 1. Floating Glassy Hearts System (Active on Landing Splash & During Entire Scroll)
+  const glassHeartsLayer = document.getElementById('floating-glass-hearts-layer');
+  let heartIdCounter = 0;
+
+  function generateGlassHeartSVG(id) {
+    return `
+      <svg viewBox="0 0 32 32" class="glassy-heart-svg">
+        <defs>
+          <linearGradient id="gh-g-${id}" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255, 255, 255, 0.88)" />
+            <stop offset="35%" stop-color="rgba(255, 225, 230, 0.58)" />
+            <stop offset="70%" stop-color="rgba(201, 162, 74, 0.45)" />
+            <stop offset="100%" stop-color="rgba(122, 31, 38, 0.38)" />
+          </linearGradient>
+          <linearGradient id="gh-s-${id}" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255, 255, 255, 0.98)" />
+            <stop offset="50%" stop-color="rgba(255, 255, 255, 0.52)" />
+            <stop offset="100%" stop-color="rgba(201, 162, 74, 0.82)" />
+          </linearGradient>
+        </defs>
+        <path d="M16 28.5 C16 28.5 3 20.5 3 10.5 C3 5.5 7 2 11.5 2 C14 2 15.5 3.5 16 4.5 C16.5 3.5 18 2 20.5 2 C25 2 29 5.5 29 10.5 C29 20.5 16 28.5 16 28.5 Z" 
+              fill="url(#gh-g-${id})" 
+              stroke="url(#gh-s-${id})" 
+              stroke-width="1.3" />
+        <path d="M 8.5 5.5 C 10 3.8 13.2 3.8 14.5 5.8" 
+              stroke="rgba(255, 255, 255, 0.95)" 
+              stroke-width="1.3" 
+              stroke-linecap="round" 
+              fill="none" />
+        <circle cx="8.8" cy="6.2" r="1" fill="#ffffff" />
+        <path d="M 23.5 5.5 C 25 7 25.8 9.2 25.5 11.5" 
+              stroke="rgba(255, 255, 255, 0.6)" 
+              stroke-width="0.9" 
+              stroke-linecap="round" 
+              fill="none" />
+      </svg>
+    `;
+  }
+
+  // Create persistent ambient floating glassy hearts
+  function createAmbientGlassHearts(count = 24) {
+    if (!glassHeartsLayer) return;
+    for (let i = 0; i < count; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'glassy-heart-item';
       
-      const left = Math.random() * 100;
-      const delay = Math.random() * 8;
-      const duration = 6 + Math.random() * 8;
-      const size = 10 + Math.random() * 15;
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      const sway = -25 + Math.random() * 50;
+      const id = ++heartIdCounter;
+      const left = Math.random() * 92 + 4; // 4% to 96%
+      const duration = 9 + Math.random() * 9; // 9s to 18s
+      const delay = -(Math.random() * duration); // negative delay so screen is immediately populated
+      const size = 16 + Math.random() * 22; // 16px to 38px
+      const sway = -45 + Math.random() * 90;
+      const rot = -35 + Math.random() * 70;
       
-      // Render heart shape
-      particle.innerHTML = `
-        <svg viewBox="0 0 24 24" fill="${color}" width="${size}" height="${size}">
-          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-        </svg>
-      `;
+      heart.style.width = `${size}px`;
+      heart.style.height = `${size}px`;
+      heart.style.left = `${left}%`;
+      heart.style.animationDuration = `${duration}s`;
+      heart.style.animationDelay = `${delay}s`;
+      heart.style.setProperty('--sway', `${sway}px`);
+      heart.style.setProperty('--rot', `${rot}deg`);
       
-      particle.style.left = `${left}%`;
-      particle.style.animationDelay = `${delay}s`;
-      particle.style.animationDuration = `${duration}s`;
-      particle.style.setProperty('--sway', `${sway}px`);
-      
-      particlesContainer.appendChild(particle);
+      heart.innerHTML = generateGlassHeartSVG(id);
+      glassHeartsLayer.appendChild(heart);
     }
   }
-  
-  createParticles();
+
+  // Dynamic Glassy Heart Spawner (For scroll events and opening burst)
+  function spawnDynamicGlassHeart(xPercent = null) {
+    if (!glassHeartsLayer) return;
+    const heart = document.createElement('div');
+    heart.className = 'glassy-heart-burst';
+    
+    const id = ++heartIdCounter;
+    const left = (xPercent !== null) ? xPercent : (Math.random() * 90 + 5);
+    const size = 18 + Math.random() * 24; // 18px to 42px
+    const sway = -50 + Math.random() * 100;
+    const rot = -40 + Math.random() * 80;
+    const duration = 3.6 + Math.random() * 2.2; // 3.6s to 5.8s
+    
+    heart.style.width = `${size}px`;
+    heart.style.height = `${size}px`;
+    heart.style.left = `${left}%`;
+    heart.style.animationDuration = `${duration}s`;
+    heart.style.setProperty('--sway', `${sway}px`);
+    heart.style.setProperty('--rot', `${rot}deg`);
+    
+    heart.innerHTML = generateGlassHeartSVG(id);
+    glassHeartsLayer.appendChild(heart);
+    
+    heart.addEventListener('animationend', () => {
+      heart.remove();
+    });
+  }
+
+  createAmbientGlassHearts();
+
+  // Scroll Listener to dynamically increase floating glassy hearts during scroll
+  let scrollHeartThrottle = false;
+  window.addEventListener('scroll', () => {
+    if (!scrollHeartThrottle) {
+      scrollHeartThrottle = true;
+      // Spawn 1-2 dynamic glassy hearts rising as user scrolls
+      spawnDynamicGlassHeart();
+      if (Math.random() > 0.35) {
+        spawnDynamicGlassHeart();
+      }
+      setTimeout(() => {
+        scrollHeartThrottle = false;
+      }, 130);
+    }
+  }, { passive: true });
 
   // 2. Envelope opening and Autoplay logic
   function playMusic() {
@@ -207,6 +286,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Confetti explosion effect (simple canvas)
     triggerConfetti();
+
+    // Celebratory burst of 12 glassy hearts floating up when opening invitation!
+    for (let i = 0; i < 12; i++) {
+      setTimeout(() => {
+        spawnDynamicGlassHeart(Math.random() * 90 + 5);
+      }, i * 85);
+    }
 
     // Anime.js entrance animation for hero elements
     if (typeof anime !== 'undefined') {
