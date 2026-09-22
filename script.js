@@ -225,31 +225,81 @@ document.addEventListener("DOMContentLoaded", () => {
 	let autoScrollRaf = null;
 	let autoScrollActive = false;
 	let autoScrollPos = 0;
+	const scrollHint = document.getElementById("scroll-hint");
+	let scrollHintShownAtY = 0;
+	let scrollHintHideTimer = null;
 
-	function stopAutoScroll() {
+	function hasMoreContentBelow() {
+		const max = document.documentElement.scrollHeight - window.innerHeight;
+		return window.scrollY < max - 80;
+	}
+
+	function hideScrollHint() {
+		if (!scrollHint) return;
+		scrollHint.classList.remove("visible");
+		scrollHint.setAttribute("aria-hidden", "true");
+		if (scrollHintHideTimer) {
+			clearTimeout(scrollHintHideTimer);
+			scrollHintHideTimer = null;
+		}
+		window.removeEventListener("scroll", onScrollWhileHintVisible);
+	}
+
+	function onScrollWhileHintVisible() {
+		if (!scrollHint || !scrollHint.classList.contains("visible")) return;
+		if (!hasMoreContentBelow() || Math.abs(window.scrollY - scrollHintShownAtY) > 48) {
+			hideScrollHint();
+		}
+	}
+
+	function showScrollHint() {
+		if (!scrollHint || !hasMoreContentBelow()) return;
+		scrollHintShownAtY = window.scrollY || document.documentElement.scrollTop || 0;
+		scrollHint.classList.add("visible");
+		scrollHint.setAttribute("aria-hidden", "false");
+		window.addEventListener("scroll", onScrollWhileHintVisible, { passive: true });
+
+		// Soft auto-dismiss so it doesn't linger forever
+		if (scrollHintHideTimer) clearTimeout(scrollHintHideTimer);
+		scrollHintHideTimer = setTimeout(hideScrollHint, 8000);
+	}
+
+	function stopAutoScroll(options = {}) {
+		const wasActive = autoScrollActive;
+		const interruptedByUser = !!options.interruptedByUser;
+
 		autoScrollActive = false;
 		if (autoScrollRaf) {
 			cancelAnimationFrame(autoScrollRaf);
 			autoScrollRaf = null;
 		}
-		window.removeEventListener("wheel", stopAutoScroll);
-		window.removeEventListener("touchstart", stopAutoScroll);
-		window.removeEventListener("pointerdown", stopAutoScroll);
-		window.removeEventListener("keydown", stopAutoScroll);
+		window.removeEventListener("wheel", onUserInterruptAutoScroll);
+		window.removeEventListener("touchstart", onUserInterruptAutoScroll);
+		window.removeEventListener("pointerdown", onUserInterruptAutoScroll);
+		window.removeEventListener("keydown", onUserInterruptAutoScroll);
+
+		if (wasActive && interruptedByUser) {
+			showScrollHint();
+		}
+	}
+
+	function onUserInterruptAutoScroll() {
+		stopAutoScroll({ interruptedByUser: true });
 	}
 
 	function startAutoScroll() {
 		stopAutoScroll();
+		hideScrollHint();
 		autoScrollActive = true;
 		autoScrollPos = window.scrollY || document.documentElement.scrollTop || 0;
 
 		// Attach stop listeners after a tick so the OPEN click/touch doesn't cancel immediately
 		setTimeout(() => {
 			if (!autoScrollActive) return;
-			window.addEventListener("wheel", stopAutoScroll, { passive: true });
-			window.addEventListener("touchstart", stopAutoScroll, { passive: true });
-			window.addEventListener("pointerdown", stopAutoScroll, { passive: true });
-			window.addEventListener("keydown", stopAutoScroll);
+			window.addEventListener("wheel", onUserInterruptAutoScroll, { passive: true });
+			window.addEventListener("touchstart", onUserInterruptAutoScroll, { passive: true });
+			window.addEventListener("pointerdown", onUserInterruptAutoScroll, { passive: true });
+			window.addEventListener("keydown", onUserInterruptAutoScroll);
 		}, 50);
 
 		// Accumulate float position — browsers snap scrollY to integers, so
