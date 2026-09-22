@@ -203,6 +203,66 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('click', playMusicFallback);
   document.addEventListener('touchstart', playMusicFallback);
 
+  let autoScrollRaf = null;
+  let autoScrollActive = false;
+  let autoScrollPos = 0;
+
+  function stopAutoScroll() {
+    autoScrollActive = false;
+    if (autoScrollRaf) {
+      cancelAnimationFrame(autoScrollRaf);
+      autoScrollRaf = null;
+    }
+    window.removeEventListener('wheel', stopAutoScroll);
+    window.removeEventListener('touchstart', stopAutoScroll);
+    window.removeEventListener('pointerdown', stopAutoScroll);
+    window.removeEventListener('keydown', stopAutoScroll);
+  }
+
+  function startAutoScroll() {
+    stopAutoScroll();
+    autoScrollActive = true;
+    autoScrollPos = window.scrollY || document.documentElement.scrollTop || 0;
+
+    // Attach stop listeners after a tick so the OPEN click/touch doesn't cancel immediately
+    setTimeout(() => {
+      if (!autoScrollActive) return;
+      window.addEventListener('wheel', stopAutoScroll, { passive: true });
+      window.addEventListener('touchstart', stopAutoScroll, { passive: true });
+      window.addEventListener('pointerdown', stopAutoScroll, { passive: true });
+      window.addEventListener('keydown', stopAutoScroll);
+    }, 50);
+
+    // Accumulate float position — browsers snap scrollY to integers, so
+    // adding <1px via scrollY + delta never moves the page.
+    const speedPxPerFrame = 0.35;
+    const maxScroll = () =>
+      Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+
+    function tick() {
+      if (!autoScrollActive) return;
+
+      const max = maxScroll();
+      if (max <= 0) {
+        stopAutoScroll();
+        return;
+      }
+
+      autoScrollPos += speedPxPerFrame;
+
+      if (autoScrollPos >= max) {
+        window.scrollTo(0, max);
+        stopAutoScroll();
+        return;
+      }
+
+      window.scrollTo(0, autoScrollPos);
+      autoScrollRaf = requestAnimationFrame(tick);
+    }
+
+    autoScrollRaf = requestAnimationFrame(tick);
+  }
+
   function openEnvelope() {
     envelopeOverlay.classList.add('opened');
     mainInvitation.classList.add('visible');
@@ -231,6 +291,9 @@ document.addEventListener('DOMContentLoaded', () => {
         easing: 'easeOutCubic'
       });
     }
+
+    // After the envelope slides away, gently auto-scroll through the invitation
+    setTimeout(startAutoScroll, 900);
   }
   
   if (btnOpen) btnOpen.addEventListener('click', openEnvelope);
